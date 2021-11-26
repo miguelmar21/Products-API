@@ -1,0 +1,26 @@
+{
+  "name": "products-api",
+  "version": "1.0.0",
+  "description": "Products API",
+  "main": "index.js",
+  "scripts": {
+    "start": "nodemon server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Ruby-SDC/Products-API.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Ruby-SDC/Products-API/issues"
+  },
+  "homepage": "https://github.com/Ruby-SDC/Products-API#readme",
+  "dependencies": {
+    "express": "^4.17.1",
+    "mongoose": "^6.0.13"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.15"
+  }
+}
