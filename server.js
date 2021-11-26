@@ -30,4 +30,7 @@ async function run() {
   console.log(product);
 }
 
-run();
+// run();
+// Parse through features first and add them somewhere. Maybe an object
+// Next, parse through the products csv. Here, you will create a new document
+// for each line in the csv but make sure to add features based on product_id

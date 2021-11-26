@@ -16,5 +16,3 @@ const productSchema = new mongoose.Schema({
 })
 
 module.exports = mongoose.model("products", productSchema);
-//id, name, slogan, description,
-//category, default_price, features, related
