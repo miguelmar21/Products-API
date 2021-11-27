@@ -12,7 +12,8 @@ const productSchema = new mongoose.Schema({
     product_id: Number,
     fabric: String,
     canvas: String
-  }]
+  }],
+  related: [Number]
 })
 
 module.exports = mongoose.model("products", productSchema);
