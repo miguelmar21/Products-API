@@ -47,9 +47,9 @@ function readProducts(features, related) {
     .pipe(csv.parse({ headers: true }))
     .on('error', error => console.error(error))
     .on('data', row => {
-      row.id = parseInt(row.id)
-      row.features = features[row.id]
-      row.related = related[row.id]
+      row.product_id = parseInt(row.product_id)
+      row.features = features[row.product_id]
+      row.related = related[row.product_id]
       data.push(row)
     })
     .on('end', rowCount => resolve(data))
@@ -57,11 +57,11 @@ function readProducts(features, related) {
 }
 
 //Returns products with features and related
-async function awaitCsv() {
+async function awaitProducts() {
   var features = await readFeatures();
   var related = await readRelated();
   var products = await readProducts(features, related);
-  console.log(products);
+  return products;
 }
 
-module.exports = awaitCsv
+module.exports = { awaitProducts }
