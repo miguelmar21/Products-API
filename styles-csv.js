@@ -4,7 +4,7 @@ const csv = require("@fast-csv/parse");
 function readPhotos() {
   return new Promise((resolve, reject) => {
     var data = {};
-    fs.createReadStream("./csv_files/photos.csv")
+    fs.createReadStream("./csv_files/photos-copy.csv")
       .pipe(csv.parse({ headers: true }))
       .on("error" , (error) => console.error(error))
       .on("data", (row) => {
@@ -62,9 +62,8 @@ async function awaitStyles() {
   var photos = await readPhotos();
   var skus = await readSkus();
   var styles = await readStyles(photos, skus);
-  console.log(photos);
+  console.log('done atlast!')
   return styles;
 }
 
-awaitStyles()
 module.exports = { awaitStyles };
