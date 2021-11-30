@@ -1,5 +1,5 @@
 const mongoose = require("mongoose");
-const { awaitProducts } = require("../products-csv.js");
+const { awaitProducts } = require("../csv-parsers/products-csv.js");
 
 //Schema for products to show on mongosh
 const productSchema = new mongoose.Schema({
@@ -41,4 +41,6 @@ async function addProductCollection() {
   });
 }
 
-addProductCollection()
+// addProductCollection()
+
+module.exports = Product;

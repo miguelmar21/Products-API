@@ -1,5 +1,5 @@
 const mongoose = require("mongoose");
-const { awaitStyles } = require("../styles-csv.js")
+const { awaitStyles } = require("../csv-parsers/styles-csv.js")
 
 //Schema for styles
 const stylesSchema = new mongoose.Schema({
@@ -43,4 +43,6 @@ async function addStylesCollection() {
   });
 }
 
-addStylesCollection()
+// addStylesCollection()
+
+module.exports = Style;

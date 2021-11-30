@@ -1,12 +1,12 @@
 const express = require('express');
 const app = express()
-const mongoose = require('mongoose')
-// const Product = require('./schemas/products.js')
-// const Style = require('./schemas/styles.js')
+const cors = require ('cors');
+const db = require ('./database')
+const products = require("./routers/productsRouter.js")
 
-mongoose.connect('mongodb://localhost/testdb')
-const db = mongoose.connection
-db.on('error', (error) => console.error(error))
-db.once('open', () => console.log('Connected to DB!'))
+app.use(express.json());
+app.use(cors());
+
+app.use('/products', products);
 
 app.listen(4000, () => console.log('Listening on port 4000'))

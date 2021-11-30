@@ -49,7 +49,7 @@ function readStyles(photos, skus) {
       .on("data", (row) => {
         row.style_id = parseInt(row.style_id);
         row.product_id = parseInt(row.product_id);
-        row.default = row.default === 1 ? true : false;
+        row.default = row.default === '1' ? true : false;
         row.photos = photos[row.style_id];
         row.skus = skus[row.style_id];
         data.push(row);
@@ -62,7 +62,6 @@ async function awaitStyles() {
   var photos = await readPhotos();
   var skus = await readSkus();
   var styles = await readStyles(photos, skus);
-  console.log('done atlast!')
   return styles;
 }
 
