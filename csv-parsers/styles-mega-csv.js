@@ -1,22 +1,17 @@
 const fs = require("fs");
 const csv = require("@fast-csv/parse");
 
-var photosSkipped = 0;
-var skusSkipped = 0;
-var stylesSkipped = 0;
-var batches = 1;
+var photosSkipped = 38;
+var skusSkipped = 38;
+var stylesSkipped = 10;
+var batches = 15;
 //last style_id in styles.csv
-var lastStyle = 4660355;
-
-// async function megaParser(photosToSkip, skusToSkip, stylesToSkip, lastStyleRow) {
-//   var styles = readPhotos2();
-//   console.log(styles)
-// }
+var lastStyle = 31;
 
 function readPhotos2(toSkip) {
   toSkip = toSkip ? toSkip : 0
   var data = {};
-  var readStream = fs.createReadStream("./csv_files/photos-copy.csv")
+  var readStream = fs.createReadStream("./csv_files/photos.csv")
     .pipe(csv.parse({ headers: true, skipRows: toSkip }))
     .on("error" , (error) => console.error(error))
     .on("data", (row) => {
@@ -24,15 +19,16 @@ function readPhotos2(toSkip) {
       var rowId = parseInt(row.id)
       delete row.style_id;
       delete row.id;
-      if (styleId === batches + 1) {
-        console.log('PHOTOS WORKS')
-        photosSkipped = rowId;
-        readSkus2(data, skusSkipped)
-        readStream.destroy()
-      } else if (!data[styleId]) {
+      if (!data[styleId]) {
         data[styleId] = [row];
       } else {
         data[styleId].push(row);
+      }
+
+      if (styleId === batches + 1 || styleId === lastStyle) {
+        photosSkipped = rowId - 1;
+        readSkus2(data, skusSkipped)
+        readStream.destroy()
       }
     })
     .on("end", (rowCount) => console.log('done with photos'));
@@ -41,25 +37,30 @@ function readPhotos2(toSkip) {
 function readSkus2(photos, toSkip) {
   toSkip = toSkip ? toSkip : 0
   var data = {};
-  var readStream = fs.createReadStream("./csv_files/skus-copy.csv")
+  var readStream = fs.createReadStream("./csv_files/skus.csv")
     .pipe(csv.parse({ headers: true, skipRows: toSkip}))
     .on("error", (error) => console.error(error))
     .on("data", (row) => {
-      row.sku_id = parseInt(row.sku_id);
-      row.style_id = parseInt(row.style_id);
+      var styleId = parseInt(row.style_id);
+      var skuId = parseInt(row.sku_id);
+      row.sku_id = skuId
+      row.style_id = styleId
       function addToSkuObject() {
         data[row.style_id][row.sku_id] = {}
         data[row.style_id][row.sku_id].size = row.size;
         data[row.style_id][row.sku_id].quantity = row.quantity;
       }
-      if (parseInt(row.style_id) === batches + 1) {
-        readStyles2(photos, data)
-        readStream.destroy()
-      } else if (!data[row.style_id]) {
+      if (!data[row.style_id]) {
         data[row.style_id] = {}
         addToSkuObject(photos, data, skusSkipped)
       } else {
         addToSkuObject()
+      }
+
+      if (styleId === batches + 1 || styleId === lastStyle) {
+        skusSkipped = skuId - 1;
+        readStyles2(photos, data, stylesSkipped)
+        readStream.destroy()
       }
     })
     .on("end", (rowCount) => console.log('done with skus'));
@@ -68,8 +69,8 @@ function readSkus2(photos, toSkip) {
 function readStyles2(photos, skus, toSkip) {
   toSkip = toSkip ? toSkip : 0
   var data = [];
-  var readStream = fs.createReadStream("./csv_files/styles-copy.csv")
-    .pipe(csv.parse({ headers: true }))
+  var readStream = fs.createReadStream("./csv_files/styles.csv")
+    .pipe(csv.parse({ headers: true, skipRows: toSkip }))
     .on("error", (error) => console.error(error))
     .on("data", (row) => {
       row.style_id = parseInt(row.style_id);
@@ -79,12 +80,20 @@ function readStyles2(photos, skus, toSkip) {
       row.skus = skus[row.style_id];
       data.push(row);
       if (parseInt(row.style_id) === batches) {
+        batches += 15;
+        stylesSkipped = parseInt(row.style_id)
+        console.log(data)
+        data = [];
         console.log(row);
+        readPhotos2(photosSkipped)
+        readStream.destroy();
+      } else if (parseInt(row.style_id) === lastStyle) {
+        console.log('done');
         readStream.destroy();
       }
     })
     .on("end", (rowCount) => console.log(rowCount));
 }
 
-console.log(readPhotos2());
+console.log(readPhotos2(photosSkipped));
 // megaParser();

@@ -69,13 +69,11 @@ function readStyles(photos, skus, toSkip) {
 
 async function awaitStyles() {
   var photos = await readPhotos();
-  console.log(photos);
-  // var skus = await readSkus();
-  // var styles = await readStyles(photos, skus);
-  // return styles;
+  var skus = await readSkus();
+  var styles = await readStyles(photos, skus);
+  return styles;
 }
 
-// awaitStyles();
 module.exports = {
   awaitStyles
 };
