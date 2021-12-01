@@ -13,7 +13,6 @@ export default function Cart() {
   const [sku, setSku] = useState();
   const [quantity, setQuantity] = useState();
   const [selected, setSelected] = useState("");
-
   // Set SKUs only after currentStyle has loaded
   useEffect(() => {
     if (stateVal.currentStyle) {
@@ -32,7 +31,8 @@ export default function Cart() {
   useEffect(() => {
     if (sku) {
       var quantArr = [];
-      var quant = skus[sku].quantity;
+      console.log(skus[sku].quantity);
+      var quant = parseInt(skus[sku].quantity);
       for (var i = 1; i < quant + 1; i++) {
         quantArr.push(i);
         if (i > 14) {

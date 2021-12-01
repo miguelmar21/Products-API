@@ -15,12 +15,7 @@ const stylesSchema = new mongoose.Schema({
       url: String,
     }
   ],
-  skus: [{
-    sku_id: Number,
-    style_id: Number,
-    size: String,
-    quantity: String
-  }]
+  skus: Object
 })
 
 var Style = mongoose.model("styles", stylesSchema);
