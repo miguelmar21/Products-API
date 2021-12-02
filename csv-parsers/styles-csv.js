@@ -1,6 +1,8 @@
 const fs = require("fs");
 const csv = require("@fast-csv/parse");
 
+//use these functions if your csvs are small! Much easier to use, but won't work with large files.
+
 function readPhotos(toSkip) {
   return new Promise((resolve, reject) => {
     toSkip = toSkip ? toSkip : 0

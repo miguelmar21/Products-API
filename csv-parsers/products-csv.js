@@ -5,7 +5,7 @@ const csv = require("@fast-csv/parse");
 function readFeatures() {
   return new Promise((resolve, reject) => {
     var data = {};
-    fs.createReadStream("./csv_files/features-copy.csv")
+    fs.createReadStream("./csv_files/features.csv")
       .pipe(csv.parse({ headers: true }))
       .on("error", (error) => console.error(error))
       .on("data", (row) => {
@@ -25,7 +25,7 @@ function readFeatures() {
 function readRelated() {
   return new Promise((resolve, reject) => {
     var data = {};
-    fs.createReadStream("./csv_files/related-copy.csv")
+    fs.createReadStream("./csv_files/related.csv")
       .pipe(csv.parse({ headers: true }))
       .on("error", (error) => console.error(error))
       .on("data", (row) => {
@@ -43,7 +43,7 @@ function readRelated() {
 function readProducts(features, related) {
   return new Promise((resolve, reject) => {
     var data = [];
-    fs.createReadStream("./csv_files/products-copy.csv")
+    fs.createReadStream("./csv_files/products.csv")
       .pipe(csv.parse({ headers: true }))
       .on("error", (error) => console.error(error))
       .on("data", (row) => {

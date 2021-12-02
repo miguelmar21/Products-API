@@ -5,10 +5,11 @@ import StyleSelector from './styleSelector.js'
 import Cart from './cart.js'
 import Grid from '@mui/material/Grid'
 import Container from '@mui/material/Container'
+import ProductSelector from './productSelector.js'
 
 export default function Overview(props) {
   return(
-    <div onClick={props.onClick}>
+    <div >
       <Container>
         <Grid container spacing={2}>
           <Grid item xs={12} md={9}>
@@ -27,6 +28,9 @@ export default function Overview(props) {
           </Grid>
         </Grid>
       </Container>
+      <div>
+        <ProductSelector />
+      </div>
     </div>
   )
 }

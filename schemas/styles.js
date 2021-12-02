@@ -20,6 +20,7 @@ const stylesSchema = new mongoose.Schema({
 
 var Style = mongoose.model("styles", stylesSchema);
 
+//Only use this if you have small csv files.
 async function addStylesCollection() {
   awaitStyles().then(async (styles) => {
     var toInsert = [];

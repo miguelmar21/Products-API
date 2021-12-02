@@ -31,7 +31,6 @@ export default function Cart() {
   useEffect(() => {
     if (sku) {
       var quantArr = [];
-      console.log(skus[sku].quantity);
       var quant = parseInt(skus[sku].quantity);
       for (var i = 1; i < quant + 1; i++) {
         quantArr.push(i);

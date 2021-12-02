@@ -16,45 +16,22 @@ export function ProductProvider({ children }) {
     { styleId: null, currentStyle: null }
   );
 
-  function getProduct() {
+  function getProduct(productId) {
+    productId = productId ? productId : 1
     axios
-      .get("http://localhost:4000/products/1")
+      .get(`http://localhost:4000/products/${productId}`)
       .then((response) => {
-        setProduct(response.data[0]);
-        axios
-          .get(
-            `http://localhost:3000/reviews/meta?product_id=38322`
-          )
-          .then((response) => {
-            const ratings = Object.values(response.data.ratings);
-            var totalRatings = 0;
-            var averageRating = 0;
-            for (let i = 0; i < ratings.length; i++) {
-              var value = i + 1;
-              var numOfRatings = parseInt(ratings[i]);
-              averageRating += value * numOfRatings;
-              totalRatings += numOfRatings;
-            }
-            averageRating /= totalRatings;
-            setMeta({
-              meta: response.data,
-              starRating: Math.round(averageRating * 4) / 4,
-              averageRating: Math.round(averageRating * 10) / 10,
-              totalRatings: totalRatings,
-            });
-          })
-          .catch((err) => {
-            console.error(err);
-          }
-      )})
+        setProduct(response.data[0])
+      })
       .catch((err) => {
         console.error(err);
       });
   }
 
   function getStyles() {
+    var productId = product.product_id ? product.product_id : 1
     axios
-      .get("http://localhost:4000/products/1/styles")
+      .get(`http://localhost:4000/products/${productId}/styles`)
       .then((response) => {
         setStyles(response.data);
         setState({ styleId: response.data[0].style_id });
@@ -85,6 +62,8 @@ export function ProductProvider({ children }) {
     <ProductContext.Provider
       value={{
         product: product,
+        setProduct: setProduct,
+        setStyles: setStyles,
         styles: styles,
         styleReducer: [state, setState],
         meta: meta,

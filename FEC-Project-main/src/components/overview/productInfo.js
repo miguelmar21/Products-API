@@ -13,14 +13,14 @@ export default function ProductInfo() {
   const [styleValue, setStyleValue] = styleReducer;
   return (
     <div className="product-info">
-      <div>
+      {/* <div>
         <Rating
           value={meta.starRating || 0}
           precision={0.25}
           sx={{ color: "purple" }}
           readOnly
         /><a href="#reviews" className="see-reviews">See reviews</a>
-      </div>
+      </div> */}
       <div className="product-name">
         <p>{product.category}</p>
         <h2>{product.name}</h2>

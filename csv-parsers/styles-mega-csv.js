@@ -4,11 +4,13 @@ const mongoose = require("mongoose");
 const Style = require("../schemas/styles.js");
 const db = require("../database.js");
 
-var photosSkipped = 0; //38 to skip falty csvs
-var skusSkipped = 0; //38 to skip falty csvs
-var stylesSkipped = 0; //10 to skip falty csvs
+var photosSkipped = 0;
+var skusSkipped = 0;
+var stylesSkipped = 0;
 var lastStyle = 4660354; //4660354 - last style in style.csv
 var batches = 101;
+
+//The mother of all parsers.
 
 async function readPhotos2(toSkip) {
   toSkip = toSkip ? toSkip : 0;
