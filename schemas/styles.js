@@ -1,5 +1,5 @@
 const mongoose = require("mongoose");
-const { awaitStyles } = require("../csv-parsers/styles-csv.js")
+const { awaitStyles } = require("../csv-parsers/styles-csv.js");
 
 //Schema for styles
 const stylesSchema = new mongoose.Schema({
@@ -13,10 +13,10 @@ const stylesSchema = new mongoose.Schema({
     {
       thumbnail_url: String,
       url: String,
-    }
+    },
   ],
-  skus: Object
-})
+  skus: Object,
+});
 
 var Style = mongoose.model("styles", stylesSchema);
 
