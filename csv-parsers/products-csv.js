@@ -1,5 +1,8 @@
 const fs = require("fs");
 const csv = require("@fast-csv/parse");
+const mongoose = require("mongoose");
+const Product = require("../schemas/products.js");
+const db = require("../database.js");
 
 //Reads features.csv and inserts them into an object based on product_id
 function readFeatures() {
@@ -64,4 +67,25 @@ async function awaitProducts() {
   return products;
 }
 
-module.exports = { awaitProducts };
+//Adds all products from CSV to collection in chunks of 1000
+async function addProductCollection() {
+  console.log('Starting process... Please wait.')
+  awaitProducts().then(async (products) => {
+    var toInsert = [];
+    const lastItem = products.length - 1;
+    for (let i = 0; i < products.length; i++) {
+      toInsert.push(products[i]);
+      if (i % 100 === 0) {
+        await Product.insertMany(toInsert);
+        toInsert = [];
+        console.log("There goes another 100");
+      } else if (i === lastItem) {
+        await Product.insertMany(toInsert);
+        console.log("Done");
+      }
+    }
+  });
+}
+
+addProductCollection()
+

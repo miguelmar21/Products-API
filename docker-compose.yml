@@ -1,0 +1,14 @@
+version: "3.9"
+services:
+  product-service:
+    build: .
+    volumes:
+      - .:user/src/app
+    ports:
+      - 9000:4000
+  mongo:
+    image: mymongo
+    ports:
+      - 27017:2717
+    volumes:
+      - mongodb:data/db

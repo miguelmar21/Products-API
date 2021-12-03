@@ -7,7 +7,7 @@ const db = require("../database.js");
 var photosSkipped = 0;
 var skusSkipped = 0;
 var stylesSkipped = 0;
-var lastStyle = 4660354; //4660354 - last style in style.csv
+var lastStyle = 5000; //4660354 - last style in style.csv
 var batches = 101;
 
 //The mother of all parsers.
@@ -103,7 +103,7 @@ function readStyles2(photos, skus, toSkip) {
         Style.insertMany(data)
           .then(response => {
             console.log("done");
-            readStream.destroy();
+            process.exit();
           })
           .catch(err => {
             console.log(err);
@@ -113,5 +113,5 @@ function readStyles2(photos, skus, toSkip) {
     .on("end", (rowCount) => console.log("end"));
 }
 
-console.log(readPhotos2(photosSkipped));
+readPhotos2(photosSkipped);
 

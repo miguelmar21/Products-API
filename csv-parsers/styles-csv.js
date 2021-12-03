@@ -1,5 +1,8 @@
 const fs = require("fs");
 const csv = require("@fast-csv/parse");
+const mongoose = require("mongoose");
+const Style = require("../schemas/styles.js");
+const db = require("../database.js");
 
 //use these functions if your csvs are small! Much easier to use, but won't work with large files.
 
@@ -76,6 +79,23 @@ async function awaitStyles() {
   return styles;
 }
 
-module.exports = {
-  awaitStyles
-};
+//Only use this if you have small csv files.
+async function addStylesCollection() {
+  awaitStyles().then(async (styles) => {
+    var toInsert = [];
+    const lastItem = styles.length - 1;
+    for (let i = 0; i < styles.length; i++) {
+      toInsert.push(styles[i]);
+      if (i % 1000 === 0) {
+        await Style.insertMany(toInsert);
+        toInsert = [];
+        console.log("There goes another 1000");
+      } else if (i === lastItem) {
+        await Style.insertMany(toInsert);
+        console.log("Done");
+      }
+    }
+  });
+}
+
+addStylesCollection()
