@@ -1,14 +1,18 @@
-version: "3.9"
+version: "3.8"
+
 services:
-  product-service:
+  app:
     build: .
-    volumes:
-      - .:user/src/app
     ports:
-      - 9000:4000
-  mongo:
-    image: mymongo
+      - 4000:4000
+    environment:
+      DB_URL: 'mongodb://db/overview'
+  db:
+    image: mongo:4.0-xenial
     ports:
-      - 27017:2717
-    volumes:
-      - mongodb:data/db
+      - 27017:27017
+    volumes: 
+      - products-api:/data/db
+
+volumes: 
+  products-api: 

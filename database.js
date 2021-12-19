@@ -1,5 +1,6 @@
 const mongoose = require('mongoose')
-mongoose.connect('mongodb://localhost:2717/overview')
+const dbUrl = process.env.DB_URL || 'mongodb+srv://sdc:Password123@cluster0.y1apv.mongodb.net/overview'
+mongoose.connect(dbUrl)
 const db = mongoose.connection
 
 db.on('error', (error) => console.error(error))

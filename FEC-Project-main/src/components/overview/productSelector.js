@@ -6,6 +6,7 @@ export default function productSelector() {
   const [currentProduct, setCurrentProduct] = useState(1);
   const { setProduct, setStyles, styleReducer} = useProduct();
   const [state, setState] = styleReducer;
+
   function changeProduct(e) {
     if (currentProduct === 1) {
       setCurrentProduct(4)
@@ -15,6 +16,18 @@ export default function productSelector() {
       setCurrentProduct(1);
     } else {
       setCurrentProduct(currentProduct + 1)
+    }
+  }
+
+  function changeProductLeft(e) {
+    if (currentProduct === 4) {
+      setCurrentProduct(1)
+    } else if (currentProduct === 12) {
+      setCurrentProduct(8)
+    } else if (currentProduct === 1) {
+      setCurrentProduct(22);
+    } else {
+      setCurrentProduct(currentProduct - 1)
     }
   }
 
@@ -42,6 +55,7 @@ export default function productSelector() {
     <div>
       <h3>Change Product!</h3>
       <div>
+        <button value='left' onClick={changeProductLeft}>⬅️</button>
         <button value='right' onClick={changeProduct}>➡️</button>
       </div>
     </div>
