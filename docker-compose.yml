@@ -1,18 +1,13 @@
 version: "3.8"
 
 services:
-  app:
+  frontend:
+    build: ./FEC-Project-main
+    ports: 
+      - 3000:3000
+  backend:
     build: .
     ports:
-      - 4000:4000
+      - 80:4000
     environment:
-      DB_URL: 'mongodb://db/overview'
-  db:
-    image: mongo:4.0-xenial
-    ports:
-      - 27017:27017
-    volumes: 
-      - products-api:/data/db
-
-volumes: 
-  products-api: 
+      DB_URL: 'mongodb+srv://sdc:Password123@cluster0.y1apv.mongodb.net/overview'
