@@ -10,4 +10,4 @@ services:
     ports:
       - 80:4000
     environment:
-      DB_URL: 'mongodb+srv://sdc:Password123@cluster0.y1apv.mongodb.net/overview'
+      DB_URL: mongodb+srv://sdc:Password123@cluster0.y1apv.mongodb.net/overview
